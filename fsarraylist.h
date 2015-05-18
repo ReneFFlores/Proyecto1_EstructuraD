@@ -2,18 +2,18 @@
 #define FSARRAYLIST_H
 #include "object.h"
 #include "tdalist.h"
-#include "dllnode.h"
 
 class Fsarraylist : public TDAList{
-  protected:
-    DLLNode* head;
+  private:
+    int capacity;
+    Object** data;
   public:
-    Fsarraylist();
+    Fsarraylist(int);
     virtual ~Fsarraylist();
     virtual bool insert(Object*, int);
     virtual int indexOf(Object*)const;
     virtual Object* get(unsigned)const;
-    virtual bool erase(unsigned); //Remove
+    virtual bool erase(unsigned);
     virtual int prev(int) const;
     virtual int next(int) const;
     virtual void reset();
