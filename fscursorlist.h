@@ -9,7 +9,7 @@ class Fscursorlist : public TDAList{
         int next;
         int prev;
     };
-    FSRow fscursor[3500];
+    FSRow fscursor[2000];
     int head, available;
 public:
     Fscursorlist(int);

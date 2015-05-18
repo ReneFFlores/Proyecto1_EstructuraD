@@ -20,9 +20,9 @@ void time_calculate(string categoria, string tipo, int tam, double time_0, doubl
 int main(int argc, char *argv[]){
   srand (time(0));
   cout << endl;
-  const int FS_SIZE = 3500;
-  const int ERASE = 1500;
-  const int OBTENER = 700;
+  const int FS_SIZE = 2000;
+  const int ERASE = 700;
+  const int OBTENER = 288;
   TDAList* linked_list = new Linkedlist();//Linkedlist
   TDAList* cursor_list = new Fscursorlist(FS_SIZE);//FSCursorList
   TDAList* array_list = new Fsarraylist(FS_SIZE);//FSArrayList
@@ -122,19 +122,19 @@ int main(int argc, char *argv[]){
   time_0 = clock();
   array_list->get(OBTENER);
   time_1 = clock();
-  time_calculate("Obtener 700","ArrayList", FS_SIZE, time_0, time_1);
+  time_calculate("Obtener object","ArrayList", FS_SIZE, time_0, time_1);
 
   //LINKEDLIST
   time_0 = clock();
   linked_list->get(OBTENER);
   time_1 = clock();
-  time_calculate("Obtener 700","LinkedList", FS_SIZE, time_0, time_1);
+  time_calculate("Obtener object","LinkedList", FS_SIZE, time_0, time_1);
 
   //CURSORLIST
   time_0 = clock();
   cursor_list->get(OBTENER);
   time_1 = clock();
-  time_calculate("Obtener 700","CursorList", FS_SIZE, time_0, time_1);
+  time_calculate("Obtener object","CursorList", FS_SIZE, time_0, time_1);
 
   cout << endl;  
 
@@ -144,21 +144,21 @@ int main(int argc, char *argv[]){
 //INDEXOF DE ARREGLOS
   //ARRAYLIST
   time_0 = clock();
-  array_list->indexOf(new Integer(2999));
+  array_list->indexOf(new Integer(399));
   time_1 = clock();
-  time_calculate("Obtener 700","ArrayList", FS_SIZE, time_0, time_1);
+  time_calculate("Obtener int","ArrayList", FS_SIZE, time_0, time_1);
 
   //LINKEDLIST
   time_0 = clock();
-  linked_list->indexOf(new Integer(2999));
+  linked_list->indexOf(new Integer(399));
   time_1 = clock();
-  time_calculate("Obtener 700","LinkedList", FS_SIZE, time_0, time_1);
+  time_calculate("Obtener int","LinkedList", FS_SIZE, time_0, time_1);
 
   //CURSORLIST
   time_0 = clock();
-  cursor_list->indexOf(new Integer(2999));
+  cursor_list->indexOf(new Integer(399));
   time_1 = clock();
-  time_calculate("Obtener 700","CursorList", FS_SIZE, time_0, time_1);
+  time_calculate("Obtener int","CursorList", FS_SIZE, time_0, time_1);
 
   cout << endl; 
 
