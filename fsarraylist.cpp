@@ -9,8 +9,10 @@ using namespace std;
 
 Fsarraylist::Fsarraylist(int most):capacity(most){
     data = new Object*[capacity];
-    if(!data){
-        cout << "Memoria insuficiente";
+    if(data){
+        //cout << "Memoria disponible";
+    }else{
+        throw "No hay memoria";
     }
 }
 
@@ -25,18 +27,21 @@ Fsarraylist::~Fsarraylist(){
 //insercion
 bool Fsarraylist::insert(Object* other, int pos) {
     if(pos > size || pos < 0){
+        cout << "Indice de inserción inválido" << endl;
         return false;
-    }else if(isFull()){
+    }else if(size == capacity){
+        cout << "Lista llena" << endl;
         return false;
     }else if (pos == size){
         data[pos] = other;
         size++;
         return true;
     }else{
-        for(int i = size; i > pos; i--){
-            data[i] = data[i-1];
+        int tmp = size;
+        while(tmp > pos){
+            data[tmp] = data[tmp-1];
+            tmp--;
         }
-
         data[pos] = other;
         size++;
         return true;
@@ -51,6 +56,7 @@ int Fsarraylist::indexOf(Object* other)const {
             break;
         }else{
             if(!data[i]->equals(other) && i == size-1){
+                cout << "Elemento no existe" << endl;
                 return -1;//indica que no existe
             }
         }
@@ -60,7 +66,8 @@ int Fsarraylist::indexOf(Object* other)const {
 //elemento en la posicion i
 Object* Fsarraylist::get(unsigned index)const {
     if(index < 0 || index == size || index > size){
-        //throw "Posicion invalida";
+        cout << "Valor no valido" << endl;;
+        return NULL;
     }else{
         return data[index];
     }
@@ -68,26 +75,13 @@ Object* Fsarraylist::get(unsigned index)const {
 
 //borra elemento en index
 bool Fsarraylist::erase(unsigned index) {
-    
-}
-
-//del indice deseado, buscar elemeto antes de el
-int Fsarraylist::prev(int index_minus_one) const {
-    index_minus_one--;
-    if(index_minus_one < 0 || index_minus_one == size || index_minus_one > size){
-        return -1;
+    if(index < 0 || index == size || index > size){
+        cout << "Valor no válido" << endl;
+        return false;
     }else{
-        return index_minus_one;
-    }
-}
-
-//del indice deseado, buscar elemento despues de el, si existe
-int Fsarraylist::next(int index_plus_one) const {
-    index_plus_one++;
-    if(index_plus_one < 0 || index_plus_one == size || index_plus_one > size){
-        return -1;
-    }else{
-        return index_plus_one;
+        delete data[index];
+        size--;
+        return true;
     }
 }
 
@@ -103,6 +97,7 @@ void Fsarraylist::reset() {
 
 Object* Fsarraylist::first()const {
     if(size == 0){
+        cout << "Lista vacía" << endl;
         return NULL;
     }else{
         return data[0];
@@ -112,33 +107,10 @@ Object* Fsarraylist::first()const {
 Object* Fsarraylist::last()const {
     if(size == 0){
         return NULL;
-    }else{
-        return data[size-1];
-    }
-}
-
-void Fsarraylist::print()const {
-    if(size == 0){
         cout << "Lista vacía" << endl;
     }else{
-        int pos = 0;
-        while(true){
-            cout << pos << ".- ";
-            data[pos]->print();
-            if(pos+1 == size){
-                break;
-            }else{
-                pos++;
-            }
-        }
-    }
-}
-
-bool Fsarraylist::isFull()const {
-    if(size == capacity){
-        return true;
-    }else{
-        return false;
+        cout << (data[size-1]) << endl;;
+        return NULL;
     }
 }
 

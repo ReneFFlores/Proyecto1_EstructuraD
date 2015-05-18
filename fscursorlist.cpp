@@ -1,6 +1,5 @@
-#include "object.h"
+/*#include "object.h"
 #include "tdalist.h"
-#include "dllnode.h"
 #include "fscursorlist.h"
 #include <stddef.h>
 
@@ -9,8 +8,10 @@ Fscursorlist::Fscursorlist(){
 }
 
 Fscursorlist::~Fscursorlist(){
-    if (head)
+    if (head){
         delete head;
+    }
+
 }
 
 bool Fscursorlist::insert(Object* data, int pos) {
@@ -85,21 +86,6 @@ bool Fscursorlist::erase(unsigned pos) {
     return true; // Indicar Éxito
 }
 
-int Fscursorlist::prev(int pos) const {
-    return pos - 1;
-}
-
-int Fscursorlist::next(int pos) const {
-    return pos + 1;
-}
-
-void Fscursorlist::reset() {
-    if (head)
-        delete head;
-    head = NULL;
-    size = 0;
-}
-
 Object* Fscursorlist::first()const {
     if (head)
         return head->getData();
@@ -113,20 +99,4 @@ Object* Fscursorlist::last()const {
     for (int i=0; i < size; i++)
         tmp = tmp->getNext();
     return tmp->getData();
-}
-
-void Fscursorlist::print()const {
-    DLLNode* tmp = head;
-    for (int i=0; i < size; i++){
-        tmp->print();
-        tmp = tmp->getNext();
-    }
-}
-
-bool Fscursorlist::isFull()const {
-    return false;
-}
-
-int Fscursorlist::getCapacity()const{
-    return -1;
-}
+}*/

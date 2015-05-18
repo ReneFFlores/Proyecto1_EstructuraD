@@ -8,10 +8,7 @@ TDAList::TDAList(){
 // Destructor
 TDAList::~TDAList(){
 }
-// Verificación de que la lista esté vacía
-bool TDAList::isEmpty()const{
-    return size == 0;
-}
+
 // Método Accesor del tamaño de la lista
 int TDAList::getSize()const{
     return size;
