@@ -23,12 +23,16 @@ Linkedlist::Node::~Node(){
 Linkedlist::Linkedlist(){
     if(head){
         head = NULL;
+    }else{
+
     }
 }
 
 Linkedlist::~Linkedlist(){
     if(head){
         delete head;
+    }else{
+
     }
 }
 
@@ -46,6 +50,7 @@ bool Linkedlist::insert(Object* other, int pos) {
             return true;
         }else{
             Node* tmp = head;
+            
             for(int i = 0; i < pos-1; i++){
                 tmp = tmp->next;
             }
@@ -63,11 +68,10 @@ int Linkedlist::indexOf(Object* other)const {
         if(tmp->data->equals(other)){
             return i;
         }else{
-            if(!tmp->data->equals(other)){
+            if(!(tmp->data)->equals(other)){
                 return -1;
             }
         }
-
         tmp = tmp->next;
     }
 }
@@ -85,9 +89,8 @@ Object* Linkedlist::get(unsigned index)const {
 }
 
 bool Linkedlist::erase(unsigned pos) {
-
-            return true;
-    }
+    return true;
+}
 
 Object* Linkedlist::first()const {
     if(size == 0){

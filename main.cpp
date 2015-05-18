@@ -5,7 +5,7 @@
 #include "tdalist.h"
 #include "linkedlist.h"
 #include "fsarraylist.h"
-//#include "fscursorlist.h"
+#include "fscursorlist.h"
 #include "tdalist.h"
 #include "fsarraylist.h"
 #include "integer.h"
@@ -19,12 +19,14 @@ void time_calculate(string categoria, string tipo, int tam, double time_0, doubl
 
 int main(int argc, char *argv[]){
   srand (time(0));
-  const int FS_SIZE = 1100;
-  const int ERASE = 500;
+  cout << endl;
+  const int FS_SIZE = 3500;
+  const int ERASE = 1500;
+  const int OBTENER = 700;
   TDAList* linked_list = new Linkedlist();//Linkedlist
-  //TDAList* cursor_list = new Fscursorlist();//FSCursorList
+  TDAList* cursor_list = new Fscursorlist(FS_SIZE);//FSCursorList
   TDAList* array_list = new Fsarraylist(FS_SIZE);//FSArrayList
-  const int pos = rand() % (FS_SIZE) +1;
+  const int pos = rand() % (FS_SIZE) + 1;
   Integer* intTemp;
 
 //-----------------------------------------------------------------------------------------------
@@ -49,10 +51,11 @@ int main(int argc, char *argv[]){
   //CursorList
   time_0 = clock();
   for(int i = 0; i < FS_SIZE; i++){
-    //cursor_list->insert(new Integer(i), i);
+    cursor_list->insert(new Integer(i), i);
   }
   time_1 = clock();
-  time_calculate("Insert","CursorList", FS_SIZE, time_0, time_1);  
+  time_calculate("Insert","CursorList", FS_SIZE, time_0, time_1);
+  cout << endl;  
 
 //-----------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------
@@ -69,6 +72,14 @@ int main(int argc, char *argv[]){
   time_1 = clock();
   time_calculate("Erase at 500","LinkedList", FS_SIZE, time_0, time_1);
 
+  //CURSORLIST
+  time_0 = clock();
+  cursor_list->erase(ERASE);
+  time_1 = clock();
+  time_calculate("Erase at 500","CursorList", FS_SIZE, time_0, time_1);
+
+  cout << endl;  
+
 //-----------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------
 //FISRT DE ARREGLOS
@@ -78,6 +89,14 @@ int main(int argc, char *argv[]){
   time_1 = clock();
   time_calculate("First","ArrayList", FS_SIZE, time_0, time_1);
 
+  //CURSORLIST
+  time_0 = clock();
+  cursor_list->first();
+  time_1 = clock();
+  time_calculate("First","CursorList", FS_SIZE, time_0, time_1);
+
+  cout << endl;  
+
 //-----------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------
 //LAST DE ARREGLOS
@@ -86,7 +105,62 @@ int main(int argc, char *argv[]){
   array_list->last();
   time_1 = clock();
   time_calculate("Last","ArrayList", FS_SIZE, time_0, time_1);
+    cout << endl; 
 
+  //CURSORLIST
+  time_0 = clock();
+  cursor_list->last();
+  time_1 = clock();
+  time_calculate("Last","CursorList", FS_SIZE, time_0, time_1);
+  cout << endl; 
+
+
+//-----------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------
+//GET DE ARREGLOS
+  //ARRAYLIST
+  time_0 = clock();
+  array_list->get(OBTENER);
+  time_1 = clock();
+  time_calculate("Obtener 700","ArrayList", FS_SIZE, time_0, time_1);
+
+  //LINKEDLIST
+  time_0 = clock();
+  linked_list->get(OBTENER);
+  time_1 = clock();
+  time_calculate("Obtener 700","LinkedList", FS_SIZE, time_0, time_1);
+
+  //CURSORLIST
+  time_0 = clock();
+  cursor_list->get(OBTENER);
+  time_1 = clock();
+  time_calculate("Obtener 700","CursorList", FS_SIZE, time_0, time_1);
+
+  cout << endl;  
+
+
+//-----------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------
+//INDEXOF DE ARREGLOS
+  //ARRAYLIST
+  time_0 = clock();
+  array_list->indexOf(new Integer(2999));
+  time_1 = clock();
+  time_calculate("Obtener 700","ArrayList", FS_SIZE, time_0, time_1);
+
+  //LINKEDLIST
+  time_0 = clock();
+  linked_list->indexOf(new Integer(2999));
+  time_1 = clock();
+  time_calculate("Obtener 700","LinkedList", FS_SIZE, time_0, time_1);
+
+  //CURSORLIST
+  time_0 = clock();
+  cursor_list->indexOf(new Integer(2999));
+  time_1 = clock();
+  time_calculate("Obtener 700","CursorList", FS_SIZE, time_0, time_1);
+
+  cout << endl; 
 
   //delete linked_list;
   //delete cursor_list;

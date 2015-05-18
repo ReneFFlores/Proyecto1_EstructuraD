@@ -18,8 +18,9 @@ Fsarraylist::Fsarraylist(int most):capacity(most){
 
 //Deletea en un for pq sino queda eliminado el nombre, pero lo almacenado queda
 Fsarraylist::~Fsarraylist(){
-    for(int i = 0; i < size; i++){
-        delete data[i];
+    int cont = 0;
+    while(cont < size){
+        delete data[cont];
     }
     delete data;
 }
@@ -69,7 +70,7 @@ Object* Fsarraylist::get(unsigned index)const {
         cout << "Valor no valido" << endl;;
         return NULL;
     }else{
-        return data[index];
+        return (data[index]);
     }
 }
 
@@ -82,16 +83,6 @@ bool Fsarraylist::erase(unsigned index) {
         delete data[index];
         size--;
         return true;
-    }
-}
-
-//sin elementos, capacity = capacoty, size = 0
-void Fsarraylist::reset() {
-    if(size != 0){
-        for(int i = 0; i < size; i++){
-            delete data[i];
-    }
-        size = 0;
     }
 }
 
@@ -109,11 +100,6 @@ Object* Fsarraylist::last()const {
         return NULL;
         cout << "Lista vacía" << endl;
     }else{
-        cout << (data[size-1]) << endl;;
-        return NULL;
+        return data[size-1];
     }
-}
-
-int Fsarraylist::getCapacity()const{
-    return capacity;
 }

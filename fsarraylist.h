@@ -5,8 +5,8 @@
 
 class Fsarraylist : public TDAList{
   private:
-    int capacity;
     Object** data;
+    int capacity;
   public:
     Fsarraylist(int);
     virtual ~Fsarraylist();
@@ -14,10 +14,8 @@ class Fsarraylist : public TDAList{
     virtual int indexOf(Object*)const;
     virtual Object* get(unsigned)const;
     virtual bool erase(unsigned);
-    virtual void reset();
     virtual Object* first()const;
     virtual Object* last()const ;
-    virtual int getCapacity()const;
 };
 
 #endif

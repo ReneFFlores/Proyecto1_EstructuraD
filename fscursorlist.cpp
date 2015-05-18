@@ -1,102 +1,126 @@
-/*#include "object.h"
+#include "object.h"
 #include "tdalist.h"
 #include "fscursorlist.h"
 #include <stddef.h>
 
-Fscursorlist::Fscursorlist(){
-    head = NULL;
+Fscursorlist::Fscursorlist(int tam){
+    size = 0;
+    available = 0;
 }
 
 Fscursorlist::~Fscursorlist(){
-    if (head){
-        delete head;
-    }
 
 }
 
-bool Fscursorlist::insert(Object* data, int pos) {
-    if (pos < 0 || pos > size)
-        return false;//try
+bool Fscursorlist::insert(Object* other, int pos) {
+    if(pos < 0 || pos > size || size == 3500){
+        return false;
+    }else{
+        FSRow neo;
+        neo.data = other;
+        if(size == 0){
+            fscursor[0] = neo;
+            head = 0;
+        }
+        for(int i = 0; i < size; i++){
+            if(fscursor[i].data == NULL){
+                available = i;
+                break;
+            }                   
+        }
+        if(pos == 0 && size!=0){
+            neo.next = head;
+            fscursor[head].prev = available;
+            fscursor[available] = neo;
+            head = size;
+        }else{
+            int tmp = head;
+            for(int i = 0; i < pos-1; i++){
+               tmp = fscursor[tmp].next; 
+            }
+                
+            neo.prev = tmp;
+            neo.next = fscursor[tmp].next;
+            fscursor[tmp].next = available;
+            fscursor[available] = neo;          
+        }
+        size++;
+        available = size;
+        return true; 
+    }
 
-    DLLNode* neo = new DLLNode(data);
-    //Continuar[Falta]
 }
 
 int Fscursorlist::indexOf(Object* other)const {
-    DLLNode* tmp = head;
-    for (int i=0; i < size; i++){
-        // Compara cada uno de los elementos con el parámetro
-        if (tmp->getData()->equals(other))
-                return i;
-        tmp = tmp->getNext();
+    int tmp = head;
+    for(int i = 0; i < size; i++){
+        if(fscursor[tmp].data->equals(other)){
+            return tmp;
+            break;
+        }else{
+            if(i == size-1 && !fscursor[tmp].data->equals(other)){
+                return -1;
+            }
+        }
+        tmp = fscursor[tmp].next;
     }
-    // En el caso de no encontrarlo
-    return -1;
 }
-// Consigue el elemento index de la lista, si index es una posición válida
+
 Object* Fscursorlist::get(unsigned index)const {
-    if (index < 0 || index >= size)
+    int tmp = head;
+    if(index < 0 || index > size || index == size){
         return NULL;
-    DLLNode* tmp = head;
-    for (int i=0; i < index; i++)
-        tmp = tmp->getNext();
-    return tmp->getData();
+    }else{
+        for(int i = 0; i < index;i++){
+            tmp = fscursor[tmp].next;
+        }
+        return fscursor[tmp].data; 
+    }
 }
 
 bool Fscursorlist::erase(unsigned pos) {
-    // Si es una posición Inválida
-    if (pos < 0 || pos >= size)
-        return false; // Indicar fracaso en la operación
-    DLLNode* tmp;
-    if (pos == 0){ // Desea Borrar la Cabeza
-        // Desenlazar
-        tmp = head->getNext();
-        tmp->setPrev(NULL);
-        head->setNext(NULL);
-        // Liberar Memoria
-        delete head;
-        // Actualizar head
-        head = tmp;
-    }else if (pos == size - 1){ // Desea Borrar el último
-        // Recorrer hasta el final
-        tmp = head;
-        for (int i=1; i<pos; i++)
-           tmp = tmp->getNext();
-        // Desenlazar
-        DLLNode* toErase = tmp->getNext();
-        tmp->setNext(NULL);
-        toErase->setPrev(NULL);
-        // Liberar Memoria
-        delete toErase;
-    }else { // Desea Borrar de enmedio
-        // Recorrer hasta el nodo anterior al que se desea borrar
-        tmp = head;
-        for (int i=1; i<pos; i++)
-           tmp = tmp->getNext();
-        // Desenlazar
-        DLLNode* toErase = tmp->getNext();
-        tmp->setNext(toErase->getNext());
-        toErase->getNext()->setPrev(tmp);
-        toErase->setNext(NULL);
-        toErase->setPrev(NULL);
-        // Liberar Memoria
-        delete toErase;
-    }
-    size--; // Disminuir Tamaño
-    return true; // Indicar Éxito
+       if(pos < 0 || pos > size){
+        return NULL;
+       }else{
+            if(pos == 0){
+                Object* tmp_data = fscursor[0].data;
+                fscursor[0].data = NULL;
+                if(size > 1){
+                    fscursor[1].prev = -1;
+                    head = 1;
+                }
+                size--;
+                return tmp_data;
+            }else{
+                int tmp = head;
+                for(int i = 0;i < pos-1; i++){
+                    tmp = fscursor[tmp].next;
+                }
+                    
+                int tmp_b = fscursor[tmp].next;
+                fscursor[tmp].next = fscursor[tmp_b].next;
+                Object* data_b = fscursor[tmp_b].data;
+                fscursor[tmp_b].data = NULL;
+                fscursor[fscursor[tmp_b].next].prev = fscursor[tmp_b].prev;
+                fscursor[tmp_b].next = -1;
+                size--;
+                return data_b;
+            }
+
+       }
+
 }
 
 Object* Fscursorlist::first()const {
-    if (head)
-        return head->getData();
-    return NULL;
+    return fscursor[head].data;
 }
 
 Object* Fscursorlist::last()const {
-    if (!head)
-        return NULL;
-    DLLNode* tmp = head;
-    for (int i=0; i < size; i++)
-        tmp = tmp->getNext();
-    return tmp->getData();
-}*/
+     int tmp = head;
+        for(int i = 0; i < size-1; i++){
+            tmp = fscursor[tmp].next;
+            if(i == size-2){
+                return fscursor[tmp].data;
+            }
+        }
+}
